@@ -1,34 +1,14 @@
-{% load staticfiles %}
-<html>
 
-    <head>
-        <title>Abtahi's Blog</title>
-		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
-		<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Nobile">
-        <link rel="stylesheet" href="{% static 'css/blog.css' %}">
-    </head>
-	
-    <body>
-        <div class="page-header">
-			<h1><a href="/">Test Blog</a></h1>
-		</div>
-		
-		<div class="content container">
-			<div class="row">
-				<div class="col-md-8">
-					{% for post in posts %}
-					<div class="post">
-						<h1><a href="">{{ post.title }}</a></h1>
-						<p><h4>{{ post.text|linebreaks }}</h4></p>
-						<div class="date">
-							<p><h5>Published: {{ post.published_date }}</h5></p>
-						</div>
-					</div>
-					{% endfor %}
-				</div>
+{% extends 'blog/base.html' %}
+
+{% block content %}
+    {% for post in posts %}
+        <div class="post">
+			<h1><a href="">{{ post.title }}</a></h1>
+			<p><h4>{{ post.text|linebreaks }}</h4></p>
+			<div class="date">
+				<p><h5>Published: {{ post.published_date }}</h5></p>
 			</div>
 		</div>
-    </body>
-
-</html>
+    {% endfor %}
+{% endblock %}
