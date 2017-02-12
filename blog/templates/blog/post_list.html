@@ -1,14 +1,36 @@
-
 {% extends 'blog/base.html' %}
 
+<!-- Blog Post -->
 {% block content %}
-    {% for post in posts %}
-        <div class="post">
-			<h1><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h1>
-			<p><h4>{{ post.text|linebreaks }}</h4></p>
-			<div class="date">
-				<p><h5>Published: {{ post.published_date }}</h5></p>
-			</div>
-		</div>
-    {% endfor %}
+<h1 class="page-header">
+    
+    <small>Random Thoughts....</small>
+</h1>
+{% for post in posts %}
+<h2>
+    <a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a>
+</h2>
+<p class="lead">
+    by <a href="index.php">{{ post.author }}</a>
+</p>
+<p><span class="glyphicon glyphicon-time"></span> Posted on {{ post.published_date }} </p>
+<hr>
+<img class="img-responsive" src="https://goo.gl/tXKVWI" alt="">
+<hr>
+<p>
+    {{ post.text | linebreaks }}
+</p>
+<a class="btn btn-primary" href="#">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
+<hr> 
+{% endfor %}
+
+<!-- Pager -->
+<ul class="pager">
+    <li class="previous">
+        <a href="#">&larr; Older</a>
+    </li>
+    <li class="next">
+        <a href="#">Newer &rarr;</a>
+    </li>
+</ul>
 {% endblock %}

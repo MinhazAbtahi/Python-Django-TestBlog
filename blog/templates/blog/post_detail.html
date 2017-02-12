@@ -1,16 +1,85 @@
 {% extends 'blog/base.html' %}
-
+<!-- Blog Post -->
 {% block content %}
-    <div class="post">
-		{% if post.published_date %}
-            <div class="date">
-				<p><h5>Published: {{ post.published_date }}</h5></p>
-			</div>
-        {% endif %}
-        <h1><u>{{ post.title }}</u></h1>
-        <p><h4>{{ post.text|linebreaks }}</h4></p>
-		{% if user.is_authenticated %}
-			<a class="btn btn-default" href="{% url 'post_edit' pk=post.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
-		{% endif %}
+<h2>
+    <a href="#">{{ post.title }}</a>
+</h2>
+<p class="lead">
+    by <a href="index.php">{{ post.author }}</a>
+</p>
+<p><span class="glyphicon glyphicon-time"></span> Posted on {{ post.published_date }} </p>
+<hr>
+<img class="img-responsive" src="https://goo.gl/tXKVWI" alt="">
+<hr>
+<p>
+    {{ post.text | linebreaks }}
+</p>
+<a class="btn btn-primary" href="#">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
+<hr>
+<!-- Pager -->
+<ul class="pager">
+    <li class="previous">
+        <a href="#">&larr; Older</a>
+    </li>
+    <li class="next">
+        <a href="#">Newer &rarr;</a>
+    </li>
+</ul>
+<!-- Blog Comments -->
+<!-- Comments Form -->
+<div class="well">
+    <h4>Leave a Comment:</h4>
+    <form method="POST" action="" role="form">
+        {% csrf_token %}
+        <div class="form-group">
+            <textarea class="form-control" name="comment" rows="3"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+<hr>
+<!-- Posted Comments -->
+<!-- Comment -->
+{% for comment in post.comments.all %}
+<div class="media">
+    <a class="pull-left" href="#">
+        <img class="media-object" src="http://placehold.it/64x64" alt="">
+    </a>
+    <div class="media-body">
+        <h4 class="media-heading">Start Bootstrap
+            <small>{{ comment.created_date }}</small>
+        </h4>
+        {{ comment.text | linebreaks }}
     </div>
+</div>
+{% endfor %}
+<!-- Comment -->
+<div class="media">
+    <a class="pull-left" href="#">
+        <img class="media-object" src="http://placehold.it/64x64" alt="">
+    </a>
+    <div class="media-body">
+        <h4 class="media-heading">Start Bootstrap
+            <small>August 25, 2014 at 9:30 PM</small>
+        </h4>
+        Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum
+        in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue
+        felis in faucibus.
+        <!-- Nested Comment -->
+        <div class="media">
+            <a class="pull-left" href="#">
+                <img class="media-object" src="http://placehold.it/64x64" alt="">
+            </a>
+            <div class="media-body">
+                <h4 class="media-heading">Nested Start Bootstrap
+                    <small>August 25, 2014 at 9:30 PM</small>
+                </h4>
+                Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum
+                in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia
+                congue felis in faucibus.
+            </div>
+        </div>
+        <!-- End Nested Comment -->
+    </div>
+</div>
 {% endblock %}
